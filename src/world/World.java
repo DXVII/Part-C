@@ -162,6 +162,9 @@ public class World {
 		return map;
 	}
 	
+	protected static HashMap<Coordinate,MapTile> getMapTiles(){
+		return mapTiles;
+	}
 	protected static MapTile lookUp(double futureX, double futureY){
 		int x = (int) Math.round(futureX);
 		int y =  MAP_HEIGHT - (int) Math.round(futureY); // Convert Y coordinate

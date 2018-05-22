@@ -363,7 +363,7 @@ public class AIController extends CarController {
 		Coordinate currentPosition = new Coordinate(getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y-i));
-			if(tile.isType(MapTile.Type.WALL)){
+			if(tile.isType(MapTile.Type.WALL) || tile.isType(MapTile.Type.FINISH)){
 				return true;
 			}
 		}
