@@ -2,13 +2,35 @@ package mycontroller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 import tiles.MapTile;
 import utilities.Coordinate;
 
-class Database {
+public class Database {
 	ArrayList<Node> graph = new ArrayList<Node>();
-	public Database(HashMap<Coordinate, MapTile> map) {
+	//list of keys
+	Coordinate mapKeys[];
+	//currKey indexes array, not physical count
+	int currKey;
+
+	public Database(HashMap<Coordinate, MapTile> map, Car car) {
+		this.generateGraph(HashMap<Coordinate, MapTile> map);
+		this.initialiseMapKeys(car);
+	}
+
+	private void initialiseMapKeys(car){
+		currKey = car.getKey();
+		mapKeys = new Coordinate[currKey];
+		for(int i=0; i<currKey; i++){
+			mapKeys[i] = null;
+		}
+		//change from physical count to array index
+		currKey-=1;
+	}
+
+	private void generateGraph(HashMap<Coordinate, MapTile> map){
 		int firstX, firstY, secondX, secondY, diffX, diffY, total;
 		for (Coordinate place: map.keySet()) {
 			MapTile value = map.get(place);
@@ -28,7 +50,7 @@ class Database {
 				if (total == 1) {
 					node1.addneighbours(node2);
 				}
-				
+
 			}
 		}
 		/*for (Coordinate place: explored.keySet()) {
@@ -37,6 +59,7 @@ class Database {
 			System.out.println(place);
 		}*/
 	}
+
 	public void update(HashMap<Coordinate, MapTile> map) {
 		for (Coordinate place: map.keySet()) {
 			MapTile value = map.get(place);

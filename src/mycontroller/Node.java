@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import tiles.MapTile;
 import utilities.Coordinate;
 
-public class Node
-{
+public class Node {
 	Coordinate coordinate;
 	MapTile tileType;
 	boolean visited;
@@ -14,16 +13,15 @@ public class Node
 	ArrayList<Node> neighbours;
 	ArrayList<Coordinate> pathway = new ArrayList<Coordinate>();
 
-	Node(Coordinate coordinate)
-	{
+	Node(Coordinate coordinate) {
 		this.coordinate = coordinate;
 		this.neighbours=new ArrayList<>();
 		this.visited = false;
-		this.explored = false;		
+		this.explored = false;
         this.pathway.add(this.coordinate);
 	}
-	public void addneighbours(Node neighbourNode)
-	{
+	
+	public void addneighbours(Node neighbourNode) {
 		this.neighbours.add(neighbourNode);
 	}
 	public ArrayList<Node> getNeighbours() {
