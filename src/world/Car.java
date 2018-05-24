@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 
 import swen30006.driving.Simulation;
@@ -334,7 +335,7 @@ public class Car extends Sprite{
 			float scalar = this.velocity.len() / MAX_REVERSE_SPEED;
 			this.velocity.scl(1/scalar);
 		}
-		else if (this.velocity.len() < EPSILON){
+		else if (this.velocity.len() < 2*EPSILON){
 			this.velocity.x = 0;
 			this.velocity.y = 0;
 			if(carDirection.equals(State.FORWARD)){
@@ -544,8 +545,8 @@ public class Car extends Sprite{
 		MapTile tile = World.lookUp(getX(), getY());
 		MapTile.Type tileType = tile.getType();
 		String trapType = (tileType == MapTile.Type.TRAP ? "("+((TrapTile) tile).getTrap()+")":"");
-		logger.info("Speed: %5.1f; Angle: %5.1f; Position: %5s; Key: %2d; Health: %5.1f; Tile: %s%s",
-				getSpeed(), getAngle(), getPosition(), getKey(), getHealth(), tileType, trapType);
+		//logger.info("Speed: %5.1f; Angle: %5.1f; Position: %5s; Key: %2d; Health: %5.1f; Tile: %s%s",
+				//getSpeed(), getAngle(), getPosition(), getKey(), getHealth(), tileType, trapType);
 	}
 
 	public HashMap<Coordinate,MapTile> getView(){
@@ -561,7 +562,9 @@ public class Car extends Sprite{
 		}
 		return subMap;
 	}
-
+	public HashMap<Coordinate,MapTile> getTiledMap(){
+		return World.getMapTiles();
+	}
 	public String getPosition(){
 		return Math.round(this.getX())+","+Math.round(this.getY());
 	}
