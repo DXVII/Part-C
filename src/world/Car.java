@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 
 import swen30006.driving.Simulation;
@@ -83,8 +84,8 @@ public class Car extends Sprite{
 			setX(World.getCarStart().x);
 			setY(World.getCarStart().y);
 		}
-		CAR_WIDTH = (int) sprite.getWidth();
-		CAR_HEIGHT = (int) sprite.getHeight();
+		CAR_WIDTH = (int) Math.min(sprite.getWidth(),sprite.getHeight());
+		CAR_HEIGHT = CAR_WIDTH;
 
 		this.currentOrientation = WorldSpatial.Direction.EAST;
 	}
@@ -334,7 +335,7 @@ public class Car extends Sprite{
 			float scalar = this.velocity.len() / MAX_REVERSE_SPEED;
 			this.velocity.scl(1/scalar);
 		}
-		else if (this.velocity.len() < EPSILON){
+		else if (this.velocity.len() < 2*EPSILON){
 			this.velocity.x = 0;
 			this.velocity.y = 0;
 			if(carDirection.equals(State.FORWARD)){
@@ -561,7 +562,9 @@ public class Car extends Sprite{
 		}
 		return subMap;
 	}
-
+	public HashMap<Coordinate,MapTile> getTiledMap(){
+		return World.getMapTiles();
+	}
 	public String getPosition(){
 		return Math.round(this.getX())+","+Math.round(this.getY());
 	}
